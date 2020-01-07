@@ -29,8 +29,13 @@ jobs:
         pipenv install --verbose --dev --skip-lock --python=${{ matrix.python }}
     # must be in it's own step, see 821eaaf and 49dd788
     # https://github.com/actions/runner/issues/258
-    - name: Install python packages
+    - name: Install Pipenv
+      continue-on-error: true
       run: |
+        python -m pip install --upgrade pip
+        git version
+        pip install pipenv
+        git version
         pipenv install --verbose --dev --skip-lock --python=${{ matrix.python }}
     - name: Run tests
       run: |
